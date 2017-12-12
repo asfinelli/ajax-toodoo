@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :new_task, only: [:new, :index]
 
   # GET /tasks
   # GET /tasks.json
   def index
     @tasks = Task.all
-    @tasks = Task.new
-    sleep 1
+
   end
 
   # GET /tasks/1
@@ -16,7 +16,6 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
   end
 
   # GET /tasks/1/edit
@@ -30,8 +29,9 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        #format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.html { redirect_to tasks_url }
+
+        #format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
@@ -65,6 +65,9 @@ class TasksController < ApplicationController
   end
 
   private
+    def new_task
+      @task = Task.new
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
